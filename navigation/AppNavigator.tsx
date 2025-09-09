@@ -60,7 +60,6 @@ const AppNavigator: React.FC = () => {
               <SafeAreaView style={styles.headerContainer}>
                 <View style={styles.headerContent}>
                   <BackButton />
-                  <Text style={styles.headerTitle}>Movie Details</Text>
                 </View>
               </SafeAreaView>
             ),
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
   headerContent: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     height: 50,
     paddingHorizontal: DIMENSIONS.spacing.md,
   },
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
     paddingVertical: DIMENSIONS.spacing.xs,
   },
   backButtonText: {
-    color: COLORS.primary,
+    color: COLORS.white,
     fontSize: DIMENSIONS.fontSize.lg,
     fontWeight: DIMENSIONS.fontWeight.semibold,
   },

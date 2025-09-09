@@ -221,26 +221,5 @@ npm run test:coverage
 4. Push to branch: `git push origin feature/amazing-feature`
 5. Open a Pull Request
 
-## �� License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
-
-- **The Movie Database (TMDB)** for providing the movie data API
-- **React Native Community** for excellent documentation and tools
-- **Netflix** for design inspiration
-
-## 📞 Contact
-
-**Developer**: Your Name  
-**Email**: your.email@example.com  
-**LinkedIn**: [Your LinkedIn Profile](https://linkedin.com/in/yourprofile)  
-**Portfolio**: [Your Portfolio Website](https://yourwebsite.com)
-
----
-
-<div align="center">
-  <p>Made with ❤️ using React Native</p>
-  <p>⭐ Star this repository if you found it helpful!</p>
-</div>
