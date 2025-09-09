@@ -1,97 +1,181 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Movie App
 
-# Getting Started
+A React Native app that interacts with The Movie Database (TMDB) API, demonstrating API integration, state management, and UI design.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Features
 
-## Step 1: Start Metro
+- **Home Screen**: Displays a scrollable list of popular movies with search functionality
+- **Movie Details**: Shows comprehensive information about selected movies
+- **Search**: Real-time search with TMDB API integration
+- **Modern UI**: Dark theme with beautiful, user-friendly design
+- **Error Handling**: Proper error states and loading indicators
+- **Pull to Refresh**: Refresh functionality for the movie list
+- **Infinite Scroll**: Load more movies as you scroll
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## API Integration
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- **Popular Movies**: `https://api.themoviedb.org/3/movie/popular`
+- **Search Movies**: `https://api.themoviedb.org/3/search/movie?query=[query]`
+- **Movie Details**: `https://api.themoviedb.org/3/movie/{id}`
+- **Image Base URL**: `https://image.tmdb.org/t/p/w500`
 
-```sh
-# Using npm
-npm start
+## Tech Stack
 
-# OR using Yarn
-yarn start
+- React Native 0.81.1
+- TypeScript
+- React Navigation 7.x
+- React Native Safe Area Context
+- The Movie Database (TMDB) API
+
+## Project Structure
+
+```
+MoviesApp/
+├── components/
+│   └── MovieItem.tsx          # Reusable movie list item component
+├── navigation/
+│   └── AppNavigator.tsx       # Navigation setup
+├── screens/
+│   ├── HomeScreen.tsx         # Main screen with movie list and search
+│   └── MovieDetailScreen.tsx  # Movie details screen
+├── services/
+│   └── api.ts                 # TMDB API service for data fetching
+├── types/
+│   └── Movie.ts               # TypeScript interfaces for TMDB data
+└── App.tsx                    # Main app component
 ```
 
-## Step 2: Build and run your app
+## Getting Started
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+1. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-### Android
+2. For iOS:
+   ```bash
+   cd ios && pod install && cd ..
+   npm run ios
+   ```
 
-```sh
-# Using npm
-npm run android
+3. For Android:
+   ```bash
+   npm run android
+   ```
 
-# OR using Yarn
-yarn android
+## Features Implemented
+
+✅ **Home Screen (Movies List)**
+- Fetch popular movies from TMDB API
+- Display in scrollable FlatList with infinite scroll
+- Show title, year, rating, plot, and poster for each movie
+- Pagination support (20 items per page)
+
+✅ **Search Functionality**
+- Search bar at the top
+- Real-time search using TMDB search API
+- Dynamic list updates with search results
+
+✅ **Movie Detail Screen**
+- Navigate on movie tap
+- Fetch detailed movie information from TMDB
+- Display comprehensive movie details
+
+✅ **UI Design**
+- User-friendly dark theme with gold accents
+- Error handling for failed requests
+- Loading spinners and skeleton loaders
+- Pull-to-refresh functionality
+- Infinite scroll for better performance
+
+✅ **Code Quality**
+- Clean, readable TypeScript code
+- Proper componentization
+- Reusable MovieItem component
+- Effective state management with hooks
+- TMDB API integration with proper error handling
+
+## TMDB API Data Structure
+
+The app handles the following TMDB movie data structure:
+
+```typescript
+interface TMDBMovie {
+  adult: boolean;
+  backdrop_path: string | null;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string | null;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
 ```
 
-### iOS
+## Key Features
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+### 🎬 **Movie Discovery**
+- Browse popular movies from TMDB
+- High-quality movie posters
+- Real-time search functionality
+- Infinite scroll for seamless browsing
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+### 🔍 **Advanced Search**
+- Search by movie title
+- Instant results as you type
+- Pagination support for search results
+- Clear search functionality
 
-```sh
-bundle install
-```
+### 📱 **Modern UI/UX**
+- Dark theme optimized for movie browsing
+- Smooth animations and transitions
+- Responsive design for all screen sizes
+- Intuitive navigation
 
-Then, and every time you update your native dependencies, run:
+### ⚡ **Performance Optimized**
+- FlatList for efficient rendering
+- Image caching and optimization
+- Lazy loading with infinite scroll
+- Proper memory management
 
-```sh
-bundle exec pod install
-```
+## Error Handling
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+The app includes comprehensive error handling for:
+- Network connectivity issues
+- API failures and rate limiting
+- Empty search results
+- Invalid movie IDs
+- Loading states and timeouts
 
-```sh
-# Using npm
-npm run ios
+## API Authentication
 
-# OR using Yarn
-yarn ios
-```
+The app uses TMDB API with Bearer token authentication:
+- Secure API key management
+- Proper request headers
+- Error handling for authentication issues
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## Performance Optimizations
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+- FlatList for efficient rendering of large lists
+- useCallback for optimized re-renders
+- Proper key extraction for list items
+- Image loading with fallback placeholders
+- Infinite scroll to reduce initial load time
+- Pagination for better API performance
 
-## Step 3: Modify your app
+## Future Enhancements
 
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Movie trailers integration
+- User favorites and watchlist
+- Movie recommendations
+- Advanced filtering options
+- Offline support with caching
+- User reviews and ratings
