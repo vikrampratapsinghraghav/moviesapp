@@ -56,28 +56,45 @@ export class ApiService {
 
   static async fetchMovieById(id: number): Promise<Movie> {
     try {
-      const response = await fetch(
-        `${BASE_URL}/movie/${id}`,
-        {
-          headers: {
-            'Authorization': `Bearer ${API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const headers = {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json',
+      } as const;
+
+      const [detailsRes, creditsRes] = await Promise.all([
+        fetch(`${BASE_URL}/movie/${id}`, { headers }),
+        fetch(`${BASE_URL}/movie/${id}/credits`, { headers }),
+      ]);
+
+      if (!detailsRes.ok) {
+        throw new Error(`HTTP error! status: ${detailsRes.status}`);
       }
-      
-      const data: TMDBMovieDetails = await response.json();
-      return this.transformMovieDetails(data);
+      if (!creditsRes.ok) {
+        throw new Error(`HTTP error! status: ${creditsRes.status}`);
+      }
+
+      const data: TMDBMovieDetails = await detailsRes.json();
+      const credits: any = await creditsRes.json();
+
+      const movie = this.transformMovieDetails(data);
+
+      // Extract director from crew and top actors from cast
+      try {
+        const director = Array.isArray(credits?.crew)
+          ? credits.crew.find((c: any) => c?.job === 'Director')?.name || 'N/A'
+          : 'N/A';
+        const actors = Array.isArray(credits?.cast)
+          ? credits.cast.slice(0, 6).map((c: any) => c?.name).filter(Boolean)
+          : [];
+        return { ...movie, director, actors };
+      } catch {
+        return movie;
+      }
     } catch (error) {
       console.error('Error fetching movie details:', error);
       throw new Error('Failed to fetch movie details. Please try again.');
     }
   }
-
   private static transformMovieListItem(tmdbMovie: TMDBMovie): MovieListItem {
     return {
       id: tmdbMovie.id,
