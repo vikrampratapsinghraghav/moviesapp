@@ -70,10 +70,14 @@ export interface Movie {
   rating: number;
   runtime: string;
   poster: string;
+  backdrop: string;
   language: string;
   country: string;
   awards: string;
   actors: string[];
+  cast: string;
+  genres: string[];
+  releaseDate: string;
   imdbRating: number;
   imdbVotes: string;
   type: string;
