@@ -19,9 +19,9 @@ const AppNavigator: React.FC = () => {
         initialRouteName="Home"
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#1a1a1a',
+            backgroundColor: '#ffffff',
           },
-          headerTintColor: '#ffffff',
+          headerTintColor: '#111111',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
@@ -33,9 +33,9 @@ const AppNavigator: React.FC = () => {
           options={{ 
             title: 'Movies',
             headerStyle: {
-              backgroundColor: '#1a1a1a',
+              backgroundColor: '#ffffff',
             },
-            headerTintColor: '#ffffff',
+            headerTintColor: '#111111',
           }}
         />
         <Stack.Screen 
@@ -44,9 +44,9 @@ const AppNavigator: React.FC = () => {
           options={({ route }) => ({ 
             title: 'Movie Details',
             headerStyle: {
-              backgroundColor: '#1a1a1a',
+              backgroundColor: '#ffffff',
             },
-            headerTintColor: '#ffffff',
+            headerTintColor: '#111111',
           })}
         />
       </Stack.Navigator>

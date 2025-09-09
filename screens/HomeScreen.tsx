@@ -30,14 +30,14 @@ const HomeScreen: React.FC = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
   
-  // Use refs to prevent unnecessary re-renders
   const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isScrolling, setIsScrolling] = React.useState(false);
+  const scrollReleaseTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const fetchMovies = useCallback(async (pageNum: number = 1, isRefresh: boolean = false) => {
     try {
       setError(null);
       const data = await ApiService.fetchMovies(pageNum);
-      
       if (isRefresh || pageNum === 1) {
         setMovies(data);
       } else {
@@ -59,7 +59,6 @@ const HomeScreen: React.FC = () => {
       setError(null);
       setSearchLoading(true);
       const data = await ApiService.searchMovies(query, pageNum);
-      
       if (pageNum === 1) {
         setMovies(data);
       } else {
@@ -81,12 +80,9 @@ const HomeScreen: React.FC = () => {
 
   const handleSearch = useCallback((query: string) => {
     setSearchQuery(query);
-    
-    // Clear existing timeout
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
     }
-    
     if (query.trim() === '') {
       setIsSearching(false);
       setPage(1);
@@ -95,11 +91,9 @@ const HomeScreen: React.FC = () => {
     } else {
       setIsSearching(true);
       setPage(1);
-      
-      // Debounce search to avoid too many API calls
       searchTimeoutRef.current = setTimeout(() => {
         searchMovies(query, 1);
-      }, 500);
+      }, 400);
     }
   }, [fetchMovies, searchMovies]);
 
@@ -115,11 +109,9 @@ const HomeScreen: React.FC = () => {
 
   const loadMore = useCallback(() => {
     if (loadingMore || loading || searchLoading) return;
-    
     setLoadingMore(true);
     const nextPage = page + 1;
     setPage(nextPage);
-    
     if (searchQuery.trim() === '') {
       fetchMovies(nextPage);
     } else {
@@ -132,11 +124,8 @@ const HomeScreen: React.FC = () => {
   }, [navigation]);
 
   const renderMovieItem = useCallback(({ item }: { item: MovieListItem }) => (
-    <MovieItem
-      movie={item}
-      onPress={() => handleMoviePress(item.id)}
-    />
-  ), [handleMoviePress]);
+    <MovieItem movie={item} onPress={() => handleMoviePress(item.id)} isScrolling={isScrolling} />
+  ), [handleMoviePress, isScrolling]);
 
   const renderEmptyComponent = () => (
     <View style={styles.emptyContainer}>
@@ -145,14 +134,6 @@ const HomeScreen: React.FC = () => {
       </Text>
     </View>
   );
-
-  const renderHeader = useCallback(() => (
-    <SearchInput 
-      value={searchQuery}
-      onSearch={handleSearch} 
-      isLoading={searchLoading}
-    />
-  ), [searchQuery, handleSearch, searchLoading]);
 
   const renderFooter = () => {
     if (!loadingMore) return null;
@@ -163,16 +144,13 @@ const HomeScreen: React.FC = () => {
     );
   };
 
-  // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
-      if (searchTimeoutRef.current) {
-        clearTimeout(searchTimeoutRef.current);
-      }
+      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+      if (scrollReleaseTimeout.current) clearTimeout(scrollReleaseTimeout.current);
     };
   }, []);
 
-  // Only show full loading screen on initial load when no movies are loaded
   if (loading && !refreshing && movies.length === 0) {
     return (
       <View style={styles.loadingContainer}>
@@ -184,11 +162,14 @@ const HomeScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.stickyHeader}>
+        <SearchInput value={searchQuery} onSearch={handleSearch} isLoading={searchLoading} />
+      </View>
+
       <FlatList
         data={movies}
         renderItem={renderMovieItem}
         keyExtractor={(item) => item.id.toString()}
-        ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderEmptyComponent}
         ListFooterComponent={renderFooter}
         refreshControl={
@@ -199,10 +180,20 @@ const HomeScreen: React.FC = () => {
             colors={['#ffd700']}
           />
         }
+        onScrollBeginDrag={() => {
+          if (scrollReleaseTimeout.current) clearTimeout(scrollReleaseTimeout.current);
+          setIsScrolling(true);
+        }}
+        onMomentumScrollEnd={() => {
+          scrollReleaseTimeout.current = setTimeout(() => setIsScrolling(false), 120);
+        }}
+        onScrollEndDrag={() => {
+          scrollReleaseTimeout.current = setTimeout(() => setIsScrolling(false), 120);
+        }}
+        contentContainerStyle={styles.listContainer}
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listContainer}
         keyboardShouldPersistTaps="handled"
       />
     </View>
@@ -212,7 +203,10 @@ const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#ffffff',
+  },
+  stickyHeader: {
+    backgroundColor: '#ffffff',
   },
   listContainer: {
     paddingBottom: 20,
@@ -221,10 +215,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#ffffff',
   },
   loadingText: {
-    color: '#ffffff',
+    color: '#111111',
     fontSize: 16,
     marginTop: 16,
   },
@@ -235,7 +229,7 @@ const styles = StyleSheet.create({
     paddingVertical: 50,
   },
   emptyText: {
-    color: '#888',
+    color: '#666',
     fontSize: 16,
     textAlign: 'center',
   },

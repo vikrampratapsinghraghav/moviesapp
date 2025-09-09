@@ -172,7 +172,7 @@ const MovieDetailScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#ffffff',
   },
   content: {
     padding: 16,
@@ -181,10 +181,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#ffffff',
   },
   loadingText: {
-    color: '#ffffff',
+    color: '#111111',
     fontSize: 16,
     marginTop: 16,
   },
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#ffffff',
     padding: 20,
   },
   errorText: {
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 180,
     borderRadius: 12,
-    backgroundColor: '#3a3a3a',
+    backgroundColor: '#e9ecef',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: '#111111',
     marginBottom: 8,
     lineHeight: 28,
   },
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
   },
   director: {
     fontSize: 16,
-    color: '#cccccc',
+    color: '#444444',
     marginBottom: 8,
   },
   rating: {
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   },
   sectionContent: {
     fontSize: 16,
-    color: '#ffffff',
+    color: '#111111',
     lineHeight: 24,
   },
 });

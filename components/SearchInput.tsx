@@ -50,20 +50,20 @@ const SearchInput: React.FC<SearchInputProps> = ({
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#ffffff',
   },
   inputContainer: {
     position: 'relative',
   },
   input: {
-    backgroundColor: '#2a2a2a',
+    backgroundColor: '#f1f3f5',
     borderRadius: 25,
     paddingHorizontal: 20,
     paddingVertical: 12,
     fontSize: 16,
-    color: '#ffffff',
+    color: '#111111',
     borderWidth: 1,
-    borderColor: '#3a3a3a',
+    borderColor: '#e2e8f0',
     paddingRight: 50, // Make room for loading indicator
   },
   loadingIndicator: {
