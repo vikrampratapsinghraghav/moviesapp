@@ -50,6 +50,12 @@ const HomeScreen: React.FC = () => {
     fetchMovies(1, true);
   }, [fetchMovies]);
 
+  const { searchQuery, searchLoading, handleSearch: debouncedSearch } = useSearch(
+    handleSearch,
+    handleClearSearch,
+    400
+  );
+
   const handleMoviePress = useCallback((movieId: number) => {
     navigation.navigate("MovieDetail", { movieId });
   }, [navigation]);
@@ -107,9 +113,9 @@ const HomeScreen: React.FC = () => {
       <View style={homeScreenStyles.container}>
         <View style={homeScreenStyles.searchContainer}>
           <SearchInput
-            value=""
-            onSearch={handleSearch}
-            isLoading={false}
+            value={searchQuery}
+            onSearch={debouncedSearch}
+            isLoading={searchLoading}
           />
         </View>
         <View style={homeScreenStyles.loadingContainer}>
@@ -124,9 +130,9 @@ const HomeScreen: React.FC = () => {
       <View style={homeScreenStyles.container}>
         <View style={homeScreenStyles.searchContainer}>
           <SearchInput
-            value=""
-            onSearch={handleSearch}
-            isLoading={false}
+            value={searchQuery}
+            onSearch={debouncedSearch}
+            isLoading={searchLoading}
           />
         </View>
         {renderError()}
@@ -138,9 +144,9 @@ const HomeScreen: React.FC = () => {
     <View style={homeScreenStyles.container}>
       <View style={homeScreenStyles.searchContainer}>
         <SearchInput
-          value=""
-          onSearch={handleSearch}
-          isLoading={false}
+          value={searchQuery}
+          onSearch={debouncedSearch}
+          isLoading={searchLoading}
         />
       </View>
       
