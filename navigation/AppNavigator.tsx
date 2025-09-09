@@ -19,34 +19,41 @@ const AppNavigator: React.FC = () => {
         initialRouteName="Home"
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#ffffff',
+            backgroundColor: '#141414',
           },
-          headerTintColor: '#111111',
+          headerTintColor: '#ffffff',
           headerTitleStyle: {
             fontWeight: 'bold',
+            fontSize: 18,
           },
+          headerShadowVisible: false,
         }}
       >
         <Stack.Screen 
           name="Home" 
           component={HomeScreen} 
           options={{ 
-            title: 'Movies',
+            title: 'MyFlix',
             headerStyle: {
-              backgroundColor: '#ffffff',
+              backgroundColor: '#141414',
             },
-            headerTintColor: '#111111',
+            headerTintColor: '#e50914',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 24,
+            },
           }}
         />
         <Stack.Screen 
           name="MovieDetail" 
           component={MovieDetailScreen}
           options={({ route }) => ({ 
-            title: 'Movie Details',
+            title: '',
             headerStyle: {
-              backgroundColor: '#ffffff',
+              backgroundColor: 'transparent',
             },
-            headerTintColor: '#111111',
+            headerTintColor: '#ffffff',
+            headerTransparent: true,
           })}
         />
       </Stack.Navigator>

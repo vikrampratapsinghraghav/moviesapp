@@ -29,7 +29,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         <TextInput
           style={styles.input}
           placeholder={placeholder}
-          placeholderTextColor="#888"
+          placeholderTextColor="#8c8c8c"
           value={value}
           onChangeText={handleTextChange}
           autoCapitalize="none"
@@ -39,7 +39,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         />
         {isLoading && (
           <View style={styles.loadingIndicator}>
-            <ActivityIndicator size="small" color="#ffd700" />
+            <ActivityIndicator size="small" color="#e50914" />
           </View>
         )}
       </View>
@@ -50,21 +50,20 @@ const SearchInput: React.FC<SearchInputProps> = ({
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#141414',
   },
   inputContainer: {
     position: 'relative',
   },
   input: {
-    backgroundColor: '#f1f3f5',
-    borderRadius: 25,
-    paddingHorizontal: 20,
+    backgroundColor: '#2a2a2a',
+    borderRadius: 8,
+    paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 16,
-    color: '#111111',
+    color: '#ffffff',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    paddingRight: 50, // Make room for loading indicator
+    borderColor: '#404040',
   },
   loadingIndicator: {
     position: 'absolute',
